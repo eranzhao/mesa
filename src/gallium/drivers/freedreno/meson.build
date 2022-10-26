@@ -310,7 +310,7 @@ ir3_compiler = executable(
     libglsl_standalone,
   ],
   build_by_default : with_tools.contains('freedreno'),
-  install : false,
+  install : true,
 )
 
 gmemtool = executable(

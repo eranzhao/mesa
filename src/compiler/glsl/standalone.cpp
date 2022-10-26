@@ -293,10 +293,44 @@ initialize_context(struct gl_context *ctx, gl_api api)
 
       ctx->Const.MaxVarying = 60 / 4;
       break;
+   // eranzhao, begin: we need compile shader which version is 310 es and 320 es.
    case 300:
+   case 310:
+   case 320:
+   // eranzhao, end
+
+      // eranzhao, begin: set values of capability as adreno 660.
+
+      // ctx->Const.MaxClipPlanes = 8;
+      // ctx->Const.MaxCombinedTextureImageUnits = 32;
+      // ctx->Const.MaxDrawBuffers = 4;
+      // ctx->Const.MinProgramTexelOffset = -8;
+      // ctx->Const.MaxProgramTexelOffset = 7;
+      // ctx->Const.MaxLights = 0;
+      // ctx->Const.MaxTextureCoordUnits = 0;
+      // ctx->Const.MaxTextureUnits = 0;
+      // ctx->Const.MaxUniformBufferBindings = 84;
+      // ctx->Const.MaxVertexStreams = 4;
+      // ctx->Const.MaxTransformFeedbackBuffers = 4;
+
+      // ctx->Const.Program[MESA_SHADER_VERTEX].MaxAttribs = 16;
+      // ctx->Const.Program[MESA_SHADER_VERTEX].MaxTextureImageUnits = 16;
+      // ctx->Const.Program[MESA_SHADER_VERTEX].MaxUniformComponents = 1024;
+      // ctx->Const.Program[MESA_SHADER_VERTEX].MaxCombinedUniformComponents = 1024;
+      // ctx->Const.Program[MESA_SHADER_VERTEX].MaxInputComponents = 0; /* not used */
+      // ctx->Const.Program[MESA_SHADER_VERTEX].MaxOutputComponents = 16 * 4;
+
+      // ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxTextureImageUnits = 16;
+      // ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxUniformComponents = 224;
+      // ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxCombinedUniformComponents = 224;
+      // ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxInputComponents = 15 * 4;
+      // ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxOutputComponents = 0; /* not used */
+
+      // ctx->Const.MaxVarying = ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxInputComponents / 4;
+
       ctx->Const.MaxClipPlanes = 8;
-      ctx->Const.MaxCombinedTextureImageUnits = 32;
-      ctx->Const.MaxDrawBuffers = 4;
+      ctx->Const.MaxCombinedTextureImageUnits = 96;
+      ctx->Const.MaxDrawBuffers = 8;
       ctx->Const.MinProgramTexelOffset = -8;
       ctx->Const.MaxProgramTexelOffset = 7;
       ctx->Const.MaxLights = 0;
@@ -306,20 +340,29 @@ initialize_context(struct gl_context *ctx, gl_api api)
       ctx->Const.MaxVertexStreams = 4;
       ctx->Const.MaxTransformFeedbackBuffers = 4;
 
-      ctx->Const.Program[MESA_SHADER_VERTEX].MaxAttribs = 16;
+      ctx->Const.MaxShaderStorageBufferBindings = 24;
+      ctx->Const.MaxShaderStorageBlockSize = 536870912;
+
+      ctx->Const.Program[MESA_SHADER_VERTEX].MaxAttribs = 32;
       ctx->Const.Program[MESA_SHADER_VERTEX].MaxTextureImageUnits = 16;
-      ctx->Const.Program[MESA_SHADER_VERTEX].MaxUniformComponents = 1024;
-      ctx->Const.Program[MESA_SHADER_VERTEX].MaxCombinedUniformComponents = 1024;
+      ctx->Const.Program[MESA_SHADER_VERTEX].MaxUniformComponents = 230400;
+      ctx->Const.Program[MESA_SHADER_VERTEX].MaxCombinedUniformComponents = 230400;
       ctx->Const.Program[MESA_SHADER_VERTEX].MaxInputComponents = 0; /* not used */
-      ctx->Const.Program[MESA_SHADER_VERTEX].MaxOutputComponents = 16 * 4;
+      ctx->Const.Program[MESA_SHADER_VERTEX].MaxOutputComponents = 128;
 
       ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxTextureImageUnits = 16;
-      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxUniformComponents = 224;
-      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxCombinedUniformComponents = 224;
-      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxInputComponents = 15 * 4;
-      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxOutputComponents = 0; /* not used */
+      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxUniformComponents = 230400;
+      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxCombinedUniformComponents = 230400;
+      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxInputComponents = 128;
+      ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxOutputComponents = 128;
 
       ctx->Const.MaxVarying = ctx->Const.Program[MESA_SHADER_FRAGMENT].MaxInputComponents / 4;
+
+      ctx->Const.MaxGeometryOutputVertices = 1024;
+      ctx->Const.MaxGeometryTotalOutputComponents = 131072;
+
+      // eranzhao, end
+
       break;
    }
 
@@ -403,6 +446,10 @@ standalone_compile_shader(const struct standalone_options *_options,
    switch (options->glsl_version) {
    case 100:
    case 300:
+   // eranzhao, begin: we need compile shader which version is 310 es and 320 es.
+   case 310:
+   case 320:
+   // eranzhao, end
       glsl_es = true;
       break;
    case 110:

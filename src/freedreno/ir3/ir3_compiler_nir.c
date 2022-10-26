@@ -3627,7 +3627,9 @@ setup_input(struct ir3_context *ctx, nir_intrinsic_instr *intr)
    so->inputs[n].flat = !coord;
 
    if (ctx->so->type == MESA_SHADER_FRAGMENT) {
-      compile_assert(ctx, slot != VARYING_SLOT_POS);
+      // eranzhao, begin: gl_FragDepth will crash here.
+      // compile_assert(ctx, slot != VARYING_SLOT_POS);
+      // eranzhao, end
 
       so->inputs[n].bary = true;
 
