@@ -22,8 +22,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef GLSL_LINK_VARYINGS_H
-#define GLSL_LINK_VARYINGS_H
+#ifndef GLSL_LINK_VARYINGS_2_H
+#define GLSL_LINK_VARYINGS_2_H
 
 /**
  * Linker functions related specifically to linking varyings between shader
@@ -32,13 +32,14 @@
 
 
 #include "main/glheader.h"
+#include "main/menums.h"
 #include "program/prog_parameter.h"
 #include "util/bitset.h"
 
 #include "nir.h"
 
 struct gl_shader_program;
-struct gl_shader_stage;
+//struct gl_shader_stage;
 struct gl_shader;
 struct gl_type;
 
@@ -211,10 +212,12 @@ struct xfb_decl
    unsigned stream_id;
 };
 
+bool link_varyings(struct gl_shader_program *prog, unsigned first, unsigned last, const struct gl_constants *consts, const struct gl_extensions *exts, gl_api api, void *mem_ctx);
+
 static inline bool
 xfb_decl_is_varying(const struct xfb_decl *xfb_decl)
 {
    return !xfb_decl->next_buffer_separator && !xfb_decl->skip_components;
 }
 
-#endif /* GLSL_LINK_VARYINGS_H */
+#endif /* GLSL_LINK_VARYINGS_2_H */

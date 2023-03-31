@@ -79,6 +79,7 @@
 #include "linker.h"
 #include "linker_util.h"
 #include "link_varyings.h"
+#include "gl_nir_link_varyings.h"
 #include "ir_optimization.h"
 #include "ir_rvalue_visitor.h"
 #include "ir_uniform.h"
@@ -3699,9 +3700,9 @@ link_varyings_and_uniforms(unsigned first, unsigned last,
       break;
    }
 
-   if (!link_varyings(prog, first, last, consts, exts,
-                      api, mem_ctx))
-      return false;
+   //if (!link_varyings(prog, first, last, consts, exts,
+   //                   api, mem_ctx))
+   //   return false;
 
    if (!consts->UseNIRGLSLLinker)
      link_and_validate_uniforms(consts, exts, prog);

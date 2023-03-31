@@ -34,6 +34,8 @@
 #include "util/hash_table.h"
 #include "util/u_math.h"
 
+#include "main/consts_exts.h"
+
 #include "nir.h"
 #include "nir_builder.h"
 #include "gl_nir.h"
@@ -2921,7 +2923,7 @@ remove_unused_shader_inputs_and_outputs(struct gl_shader_program *prog,
       fixup_vars_lowered_to_temp(shader, mode);
 }
 
-static bool
+bool
 link_varyings(struct gl_shader_program *prog, unsigned first,
               unsigned last, const struct gl_constants *consts,
               const struct gl_extensions *exts, gl_api api, void *mem_ctx)
