@@ -3667,8 +3667,11 @@ link_and_validate_uniforms(const struct gl_constants *consts,
 }
 
 static bool
-link_varyings(const struct gl_constants *consts, struct gl_shader_program *prog,
-              void *mem_ctx)
+link_varyings_and_uniforms(unsigned first, unsigned last,
+                           const struct gl_constants *consts,
+                           const struct gl_extensions *exts,
+                           gl_api api,
+                           struct gl_shader_program *prog, void *mem_ctx)
 {
    /* Mark all generic shader inputs and outputs as unpaired. */
    for (unsigned i = MESA_SHADER_VERTEX; i <= MESA_SHADER_FRAGMENT; i++) {
@@ -4064,7 +4067,8 @@ link_shaders(struct gl_context *ctx, struct gl_shader_program *prog)
 
    store_fragdepth_layout(prog);
 
-   if(!link_varyings(consts, prog, mem_ctx))
+   if(!link_varyings_and_uniforms(first, last, consts,
+                                  &ctx->Extensions, ctx->API, prog, mem_ctx))
       goto done;
 
    /* OpenGL ES < 3.1 requires that a vertex shader and a fragment shader both
